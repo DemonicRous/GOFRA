@@ -10,3 +10,8 @@ Route::get('/', function () {
     ]);
 })->name('index');
 
+Route::get('/about', function () {
+    return Inertia::render('About', [
+
+    ]);
+})->name('about');
