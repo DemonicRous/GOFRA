@@ -28,6 +28,15 @@ html.dark {
     --button-hover-bg: #e5e7eb; /* Светло-серый */
 }
 
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+
 /* Основные стили для body */
 body {
     background-color: var(--bg-color);

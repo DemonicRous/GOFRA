@@ -52,10 +52,6 @@ import { Inertia } from '@inertiajs/inertia';
 const isLoading = ref(false);
 const minTimeElapsed = ref(true); // Изначально true, чтобы не блокировать первый рендер
 const startTimestamp = ref(0); // Время начала загрузки
-
-// Таймер для обеспечения минимального времени отображения лоадера
-let minDisplayTimer = null;
-
 // Вычисляемое свойство для определения, нужно ли показывать лоадер
 const shouldShowLoader = ref(false);
 
@@ -64,7 +60,6 @@ const isDarkTheme = ref(document.documentElement.classList.contains('dark'));
 
 // Обновляем isDarkTheme при изменении класса 'dark' на html
 watchEffect(() => {
-    // Эта функция будет вызываться при каждом изменении зависимостей
     // document.documentElement.classList - это объект, и его свойство 'contains' отслеживается
     isDarkTheme.value = document.documentElement.classList.contains('dark');
 });
@@ -75,16 +70,22 @@ const logoSecondaryColor = computed(() => isDarkTheme.value ? '#1f2937' : '#ffff
 
 // Функция для обновления shouldShowLoader
 const updateShouldShowLoader = () => {
-    shouldShowLoader.value = isLoading.value || !minTimeElapsed.value;
+    const newShouldShow = isLoading.value || !minTimeElapsed.value;
+    if (newShouldShow !== shouldShowLoader.value) {
+        shouldShowLoader.value = newShouldShow;
+    }
 };
 
 // Функция для сброса таймера (если он активен)
 const clearMinTimer = () => {
-    if (minDisplayTimer) {
-        clearTimeout(minDisplayTimer);
-        minDisplayTimer = null;
+    if (minTimer) {
+        clearTimeout(minTimer);
+        minTimer = null;
     }
 };
+
+// Таймер для обеспечения минимального времени отображения лоадера
+let minTimer = null;
 
 // Функция для запуска таймера минимального времени
 const startMinTimer = () => {
@@ -93,7 +94,7 @@ const startMinTimer = () => {
     updateShouldShowLoader(); // Обновляем отображение
 
     clearMinTimer(); // Очищаем старый таймер, если был
-    minDisplayTimer = setTimeout(() => {
+    minTimer = setTimeout(() => {
         // Проверяем, прошло ли ровно 2 секунды с момента start
         const elapsed = Date.now() - startTimestamp.value;
         const remaining = Math.max(0, 2000 - elapsed); // Оставшееся время до 2 секунд
@@ -105,13 +106,27 @@ const startMinTimer = () => {
         } else {
             // Старт был давно, но таймер сработал с задержкой
             // Перезапускаем таймер на оставшееся время
-            minDisplayTimer = setTimeout(() => {
+            minTimer = setTimeout(() => {
                 minTimeElapsed.value = true;
                 updateShouldShowLoader();
             }, remaining);
         }
     }, 2000); // Планируем срабатывание на 2000 мс после start
 };
+
+// Функция для управления классом overflow-hidden на body
+const updateBodyOverflow = (showLoader) => {
+    if (showLoader) {
+        document.body.classList.add('overflow-hidden'); // Добавляем класс, когда лоадер активен
+    } else {
+        document.body.classList.remove('overflow-hidden'); // Убираем класс, когда лоадер скрыт
+    }
+};
+
+// Наблюдаем за shouldShowLoader и обновляем overflow
+watchEffect(() => {
+    updateBodyOverflow(shouldShowLoader.value);
+});
 
 onMounted(() => {
     // Подписываемся на события Inertia
@@ -250,7 +265,7 @@ onMounted(() => {
 }
 .page-content-enter-from {
     opacity: 0;
-    transform: translateX(50px); /* Новая страница въезжает справа */
+    transform: translateX(50px); /* Новая страниця въезжает справа */
 }
 
 /* Обертка для контента */
