@@ -31,7 +31,7 @@
                         </g>
                     </svg>
                 </g>
-                <g transform="translate(246.201, 172.114)">
+                <g transform="translate(246.201, 172.114)" class="hidden md:block">
                     <svg x="0" y="0" width="314.799" height="66.3311" viewBox="4.949999809265137 -65.48999786376953 314.80999755859375 66.32000732421875">
                         <!-- Текст "gofra" -->
                         <g class="svg-logo-3">
