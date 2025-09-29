@@ -1,16 +1,5 @@
+/* resources/css/app.css */
 @import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-@custom-variant dark (&:where(.dark, .dark *));
 
 /* Определение CSS-переменных для цветов */
 @theme {
@@ -44,6 +33,12 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease; /* Плавный переход */
+    overflow-x: hidden; /* Скрываем горизонтальную прокрутку */
+    overflow-y: hidden; /* Скрываем вертикальную прокрутку */
+    /* Для более тонкого контроля прокрутки на уровне html */
+    /* html { */
+    /*   overflow: hidden; */
+    /* } */
 }
 
 /* Стили для кнопки переключения темы */
