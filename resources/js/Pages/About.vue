@@ -11,7 +11,9 @@ import NavLink from "@/Components/Navigation/NavLink.vue"; // Импортиру
     <GuestLayout>
         <h1 class="text-2xl font-bold">О проекте GOFRA</h1>
         <p class="mt-2">Это вторая страница для демонстрации переходов и прелоадера.</p>
-        <NavLink :href="route('index')" class="mt-4 inline-block text-green-600 hover:underline dark:text-green-400">Вернуться на главную</NavLink>
+        <NavLink :href="route('index')" class="mt-4 inline-block text-green-600 hover:underline dark:text-green-400">
+            Перейти на страницу О проекте
+        </NavLink>
     </GuestLayout>
 </template>
 
