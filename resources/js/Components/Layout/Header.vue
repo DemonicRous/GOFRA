@@ -31,7 +31,7 @@ const navLinks = [
 <template>
   <header class="bg-[var(--bg-color)] shadow-md sticky top-0 z-40">
     <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center py-4">
+      <div class="flex justify-between items-center py-0">
         <div class="flex-shrink-0">
           <Logo />
         </div>
@@ -52,7 +52,7 @@ const navLinks = [
 
         <div class="flex items-center space-x-4">
           <!-- Кнопка темы скрыта на мобильных -->
-          <ThemeToggle class="hidden md:block w-10 h-10" />
+          <ThemeToggle class="hidden md:block" />
           <button
               @click="toggleMobileMenu"
               class="md:hidden text-[var(--text-color)] focus:outline-none focus:ring-2 focus:ring-green-500 rounded-md p-1"
